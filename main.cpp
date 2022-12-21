@@ -1,4 +1,5 @@
 //#include <Wire.h>
+#include <Arduino.h>
 #include <Servo.h>
 
 //Iniciando servos:
