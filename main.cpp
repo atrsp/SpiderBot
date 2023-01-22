@@ -1,5 +1,4 @@
 //#include <Wire.h>
-#include <Arduino.h>
 #include <Servo.h>
 
 //Iniciando servos:
@@ -33,6 +32,10 @@ float distancia;
 
 #define distanciaSegura 20
 
+void AndarReto();
+
+void GirarHorario();
+
 void setup() {
 
   //Setup dos servos:
@@ -50,17 +53,27 @@ void setup() {
   TE_perna.attach(pinTE_perna);
 
   //Posicao inicial:
-  FD_corpo.write(0);
-  FD_perna.write(0);
+  FD_corpo.write(50);
+  delay(100);
+  TD_corpo.write(110);
+  delay(100);
+  FE_corpo.write(140);
+  delay(100);
+  TE_corpo.write(60);
+  delay(100);
 
-  TD_corpo.write(0);
-  TD_perna.write(0);
+  delay(1000);
 
-  FE_corpo.write(0);
-  FE_perna.write(0);
 
-  TE_corpo.write(0);
-  TE_perna.write(0);
+  //servos da perna nao podem ir nos extremos
+  FD_perna.write(90);
+  delay(100);
+  TD_perna.write(200);
+  delay(100);
+  FE_perna.write(20);
+  delay(100);
+  TE_perna.write(40);
+  delay(3000);
 
   //Setup do sensor ultrassonico:
   pinMode(pinEcho, INPUT);
@@ -69,6 +82,7 @@ void setup() {
 
 void loop() {
 
+  /*
   //Leitura da distancia:
   distancia = LeDistancia();
 
@@ -81,20 +95,44 @@ void loop() {
 
     AndarReto();
   }
+
+  */
+
+  AndarReto();
 }
 
 float LeDistancia() {
 
   digitalWrite(pinTrigger, LOW);
-  delayMicrosseconds(5);
+  //delayMicrosseconds(5);
+  delay(0.005);
 
   digitalWrite(pinTrigger, HIGH);
-  delayMicrosseconds(10);
+  //delayMicrosseconds(10);
+  delay(0.01);
   digitalWrite(pinTrigger, LOW);
 
   return (pulseIn(pinEcho, HIGH) * 0.017);
 }
 
-void AndarReto();
+void AndarReto() {
 
-void GirarHorario();
+  FE_corpo.write(200);
+  //FE_perna.write(50);
+  delay(1000);
+
+  TD_corpo.write(180);
+  //TD_perna.write(50);
+  delay(1000);
+
+  FD_corpo.write(120);
+  //FD_perna.write(50);
+  delay(1000);
+
+  TE_corpo.write(130);
+  //TE_perna.write(50);
+  delay(1000);
+
+}
+
+void GirarHorario() {
