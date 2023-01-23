@@ -117,22 +117,65 @@ float LeDistancia() {
 
 void AndarReto() {
 
-  FE_corpo.write(200);
+  
+  // Andada Aranha
+  //FE_corpo.write(70); //ok
   //FE_perna.write(50);
-  delay(1000);
 
-  TD_corpo.write(180);
+  
+  //TD_corpo.write(40);
+  /*
   //TD_perna.write(50);
-  delay(1000);
 
-  FD_corpo.write(120);
+  delay(300);
+
+  FD_corpo.write(0);
   //FD_perna.write(50);
-  delay(1000);
-
-  TE_corpo.write(130);
+  TE_corpo.write(10);
   //TE_perna.write(50);
+  
+
   delay(1000);
 
+  FE_corpo.write(180);
+  TD_corpo.write(180); //ok
+
+  delay(300);
+  
+  FD_corpo.write(100); //ok
+  TE_corpo.write(110);
+
+
+  delay(1000);
+ */
+
+
+/*********************************************************************/
+// a parte que vai para tras tem q se mover menos do q a q vai para frente.
+
+  //Andada Caranguejo
+  FE_corpo.write(70); //ok
+  TE_corpo.write(0); //ok
+
+  delay(100);
+
+  FD_corpo.write(0);
+  TD_corpo.write(40);
+
+  delay(1000);
+
+  FE_corpo.write(180);
+  TE_corpo.write(110);
+
+  delay(100);
+  
+  FD_corpo.write(100); //ok
+  TD_corpo.write(170); //ok
+  
+  delay(1000);
+  
 }
 
 void GirarHorario() {
+
+}
