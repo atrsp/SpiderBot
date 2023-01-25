@@ -38,6 +38,10 @@ void GirarHorario();
 
 void setup() {
 
+  //Setup monitor serial
+
+  Serial.begin(9600);
+
   //Setup dos servos:
   //Attachs - seta os pinos:
   FD_corpo.attach(pinFD_corpo);
@@ -52,6 +56,8 @@ void setup() {
   TE_corpo.attach(pinTE_corpo);
   TE_perna.attach(pinTE_perna);
 
+  
+
   //Posicao inicial:
   FD_corpo.write(50);
   delay(100);
@@ -59,21 +65,43 @@ void setup() {
   delay(100);
   FE_corpo.write(140);
   delay(100);
-  TE_corpo.write(60);
+  TE_corpo.write(130);
   delay(100);
 
   delay(1000);
 
-
+  
   //servos da perna nao podem ir nos extremos
   FD_perna.write(90);
   delay(100);
-  TD_perna.write(200);
+  TD_perna.write(40);
   delay(100);
-  FE_perna.write(20);
+  TD_perna.write(170);
   delay(100);
-  TE_perna.write(40);
+  FE_perna.write(40);
+  delay(100);
+  TE_perna.write(60);
+  //delay(1000);
+
   delay(3000);
+
+  /*
+  FD_perna.write(50);
+  delay(500);
+  FD_perna.write(150);
+
+  TD_perna.write(40);
+  delay(500);
+  TD_perna.write(170);
+
+  FE_perna.write(170);
+  delay(500);
+  FE_perna.write(20);
+
+  TE_perna.write(140);
+  delay(500);
+  TE_perna.write(40);
+  */
 
   //Setup do sensor ultrassonico:
   pinMode(pinEcho, INPUT);
@@ -85,7 +113,10 @@ void loop() {
   /*
   //Leitura da distancia:
   distancia = LeDistancia();
-
+  
+  Serial.println("Distancia = ");
+  Serial.print(distancia);
+  
   //Processa decisao de movimento:
   if (distancia <= distanciaSegura) {
 
@@ -98,7 +129,7 @@ void loop() {
 
   */
 
-  AndarReto();
+  //AndarReto();
 }
 
 float LeDistancia() {
@@ -182,7 +213,7 @@ void AndarReto() {
 
   delay(300);
 
-  TE_corpo.write(0);
+  TE_corpo.write(50);
   delay(300);
   TD_corpo.write(170);
 
@@ -194,7 +225,7 @@ void AndarReto() {
 
   delay(300);
 
-  TE_corpo.write(50);
+  TE_corpo.write(130);
   delay(300);
   TD_corpo.write(100);
 
