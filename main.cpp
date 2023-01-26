@@ -32,6 +32,18 @@ float distancia;
 
 #define distanciaSegura 20
 
+#define posIncial_FD_corpo 50
+#define posInicial_FD_perna 120
+
+#define posInicial_TD_corpo 40
+#define posInicial_TD_perna 100
+
+#define posInicial_FE_corpo 140
+#define posInicial_FE_perna 60
+
+#define posInicial_TE_corpo 130
+#define posInicial_TE_perna 70
+
 void AndarReto();
 
 void GirarHorario();
@@ -57,34 +69,29 @@ void setup() {
   TE_perna.attach(pinTE_perna);
 
   
-
-  //Posicao inicial:
-  FD_corpo.write(50);
+  //Posicao inicial corpo:
+  FD_corpo.write(posIncial_FD_corpo);
   delay(100);
-  TD_corpo.write(40);
+  TD_corpo.write(posInicial_TD_corpo);
   delay(100);
-  FE_corpo.write(140);
+  FE_corpo.write(posInicial_FE_corpo);
   delay(100);
-  TE_corpo.write(130);
-  delay(100);
+  TE_corpo.write(posInicial_TE_corpo);
 
   delay(1000);
 
-  //servos da perna nao podem ir nos extremos
-  FD_perna.write(120);
+  //Posicao inicial perna
+  FD_perna.write(posInicial_FD_perna);
   delay(100);
-  TD_perna.write(100);
+  TD_perna.write(posInicial_TD_perna);
   delay(100);
-  //TD_perna.write(170);
+  FE_perna.write(posInicial_FE_perna);
+  delay(100);
+  //FE_perna.write(posInicial_FE_perna + 50);
   //delay(100);
-  FE_perna.write(40);
-  delay(100);
-  //TE_perna.write(60);
-  TE_perna.write(70);
-  //delay(1000);
+  TE_perna.write(posInicial_TE_perna);
 
   delay(3000);
-
 
   //Setup do sensor ultrassonico:
   pinMode(pinEcho, INPUT);
@@ -129,7 +136,7 @@ float LeDistancia() {
 void AndarReto() {
 
   
-    // Andada Aranha
+  // Andada Aranha
   //FE_corpo.write(70); //ok
   //FE_perna.write(50);
 
@@ -179,55 +186,75 @@ void AndarReto() {
   */
   
   //frente
-  FE_corpo.write(80);
-  delay (1000);
-  //frente
-  FD_corpo.write(100);
+  FE_perna.write(posInicial_FE_perna - 30); //levanta
+  delay(150);
+  FE_corpo.write(posInicial_FE_corpo - 40);
+  delay(150);
+  FE_perna.write(posInicial_FE_perna); //abaixa pos_inicial
 
-  delay(1000);
-  //frente
-  TE_corpo.write(50);
-  delay(1000);
-  //frente
-  TD_corpo.write(120);
-
-  delay(1000);
-
-  //tras
-  FE_perna.write(80);
-  delay(250);
-  FE_corpo.write(180);
-  delay(250);
-  FE_perna.write(40);
-
-
-  delay(1000);
-  //tras
-
-  FD_perna.write(150);
-  delay(250);
-  FD_corpo.write(0);
-  delay(250);
-  FD_perna.write(120);
-
-  delay(1000);
-
-  //tras
-  delay(250);
-  TE_corpo.write(130);
-  delay(250);
-
-  delay(1000);
-
-  //tras
-  TD_perna.write(125);
-  delay(250);
-  TD_corpo.write(20);
-  delay(250);
-  TD_perna.write(100);
+  delay (250);
   
+  //frente
+  FD_perna.write(posInicial_FD_perna - 30); //levanta
+  delay(150);
+  FD_corpo.write(posIncial_FD_corpo + 40);
+  delay(150);
+  FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
 
-  delay(1000);
+  delay(250);
+
+  //frente
+  TE_perna.write(posInicial_TE_perna - 30); //levanta
+  delay(150);
+  TE_corpo.write(posInicial_TE_corpo - 60);
+  delay(150);
+  TE_perna.write(posInicial_TE_perna); //abaixa pos_inicial
+
+  delay(250);
+
+  //frente
+  TD_perna.write(posInicial_TD_perna - 30); //levanta
+  delay(150);
+  TD_corpo.write(posInicial_TD_corpo + 60);
+  delay(150);
+  TD_perna.write(posInicial_TD_perna); //abaixa pos_inicial
+
+  delay(250);
+
+  //tras
+  FE_perna.write(posInicial_FE_perna + 30); //abaixa
+  delay(150);
+  FE_corpo.write(posInicial_FE_corpo + 40);
+  delay(150);
+  FE_perna.write(posInicial_FE_perna); //levanta pos_inicial
+
+
+  delay(250);
+  //tras
+
+  FD_perna.write(posInicial_FD_perna + 30); //abaixa
+  delay(150);
+  FD_corpo.write(posIncial_FD_corpo - 50);
+  delay(150);
+  FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
+
+  delay(250);
+
+  //tras
+  delay(150);
+  TE_corpo.write(posInicial_TE_corpo);
+  delay(150);
+
+  delay(250);
+
+  //tras
+  TD_perna.write(posInicial_TD_perna + 25); //abaixa
+  delay(150);
+  TD_corpo.write(posInicial_TD_corpo - 30);
+  delay(150);
+  TD_perna.write(posInicial_TD_perna); //levanta pos_inicial
+
+  delay(250);
   
 }
 
