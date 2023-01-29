@@ -62,16 +62,12 @@ float distancia;
 #define posInicial_TE_perna 60 //70
 
 void PosInicial();
-
 void AndarReto();
-
 void GirarHorario();
-
 
 void setup() {
 
   //Setup monitor serial
-
   Serial.begin(9600);
 
   //Setup dos servos:
@@ -88,7 +84,6 @@ void setup() {
   TE_corpo.attach(pinTE_corpo);
   TE_perna.attach(pinTE_perna);
 
-  
   delay(1000);
   PosInicial();
   delay(1000);
@@ -99,10 +94,8 @@ void setup() {
 }
 
 
-
 /*****************LOOP*****************/
 void loop() {
-
   
   //Leitura da distancia:
   distancia = LeDistancia();
@@ -119,18 +112,15 @@ void loop() {
     delay(500);
     PosInicial();
   }
+
   else {
     AndarReto();
   }
-  
-  
-  //AndarReto();
 }
 /*****************************************/
 
-
-
 void PosInicial() {
+
   //Posicao inicial corpo:
   FD_corpo.write(posIncial_FD_corpo);
   delay(100);
@@ -155,12 +145,11 @@ void PosInicial() {
 float LeDistancia() {
 
   digitalWrite(pinTrigger, LOW);
-  //delayMicrosseconds(5);
   delay(0.005);
 
   digitalWrite(pinTrigger, HIGH);
-  //delayMicrosseconds(10);
   delay(0.01);
+
   digitalWrite(pinTrigger, LOW);
 
   return (pulseIn(pinEcho, HIGH) * 0.017);
@@ -168,9 +157,7 @@ float LeDistancia() {
 
 void AndarReto() {
   
-
   /*
-
   // andada funcional
   //frente
   FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
@@ -208,10 +195,8 @@ void AndarReto() {
 
   //delay(250);
 
-
 /**************************************************************/
   /*
-
   //tras
   FE_perna.write(posInicial_FE_perna + 30); //abaixa
   delay(150);
@@ -249,9 +234,6 @@ void AndarReto() {
   //delay(250);
   */
 
-
-
-
   //teste 2 de andada
 
   //frente
@@ -281,7 +263,6 @@ void AndarReto() {
   TE_corpo.write(posInicial_TE_corpo - 30); //-40
   delay(150);
   TE_perna.write(posInicial_TE_perna); //abaixa pos_inicial
-
 
   /***************************************************/
 
@@ -313,17 +294,10 @@ void AndarReto() {
   delay(150);
   FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
 
-
 }
-
-
-
-
-
 
 void GirarHorario() {
   
-
   //frente
   FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
   delay(150);
@@ -351,7 +325,6 @@ void GirarHorario() {
   FD_corpo.write(posIncial_FD_corpo - 40); //-50
   delay(150);
   FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
-
 
 /*****************************************************/
 
@@ -383,15 +356,7 @@ void GirarHorario() {
   delay(150);
   FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
 
-
-
-
-
-
   /*-----------------------------------*/
-
-
-
 
   //frente
   FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
@@ -420,7 +385,6 @@ void GirarHorario() {
   FD_corpo.write(posIncial_FD_corpo - 40); //-50
   delay(150);
   FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
-
 
 /*****************************************************/
 
@@ -452,13 +416,7 @@ void GirarHorario() {
   delay(150);
   FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
 
-
-
-
   /*-----------------------------------*/
-
-
-
 
   //frente
   FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
@@ -487,7 +445,6 @@ void GirarHorario() {
   FD_corpo.write(posIncial_FD_corpo - 40); //-50
   delay(150);
   FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
-
 
 /*****************************************************/
 
