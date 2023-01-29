@@ -7,5 +7,5 @@
 #### **Resumo:** Nosso projeto consiste na produção de uma aranha robótica constituída de uma estrutura em acrílico, que comporta 8 micro servos, um sensor ultrassônico para detectar obstáculos no caminho, o arduino UNO R3 e as baterias de alimentação.
 
 #### Detalhamento: nesse projeto, estamos desenvolvendo uma aranha robótica que muda de direção ao detectar um obstáculo a menos de 30cm de distância, evitando colisões.
-###### OBS: o código presente aqui ainda está em desenvovimento e, portanto, está suscetível a mudanças;
+###### OBS: o código atual ainda está em desenvovimento e, portanto, está suscetível a mudanças;
 
