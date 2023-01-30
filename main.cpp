@@ -33,16 +33,16 @@ float distancia;
 #define distanciaSegura 30
 
 #define posIncial_FD_corpo 50
-#define posInicial_FD_perna 125 //135
+#define posInicial_FD_perna 140 //135
 
 #define posInicial_TD_corpo 40
-#define posInicial_TD_perna 95 //100
+#define posInicial_TD_perna 105 //100
 
 #define posInicial_FE_corpo 140
-#define posInicial_FE_perna 95 //100
+#define posInicial_FE_perna 120 //100
 
 #define posInicial_TE_corpo 130
-#define posInicial_TE_perna 60 //70
+#define posInicial_TE_perna 70 //70
 
 void PosInicial();
 void AndarReto();
@@ -86,6 +86,7 @@ void loop() {
   Serial.println("Distancia = ");
   Serial.print(distancia);
   
+  
   //Processa decisao de movimento:
   if (distancia <= distanciaSegura) {
     delay(1000);
@@ -99,6 +100,9 @@ void loop() {
   else {
     AndarReto();
   }
+  
+  
+  
 }
 /*****************************************/
 
@@ -164,14 +168,14 @@ void AndarReto() {
   //frente
   TE_perna.write(posInicial_TE_perna - 30); //levanta
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo - 30); //-40
+  TE_corpo.write(posInicial_TE_corpo - 40); //-40
   delay(150);
   TE_perna.write(posInicial_TE_perna); //abaixa pos_inicial
 
   /***************************************************/
 
   //tras
-  FE_perna.write(posInicial_FE_perna + 30); //abaixa
+  FE_perna.write(posInicial_FE_perna + 20); //abaixa
   delay(150);
   FE_corpo.write(posInicial_FE_corpo + 30); //+40
   delay(150);
@@ -185,14 +189,14 @@ void AndarReto() {
   TD_perna.write(posInicial_TD_perna); //levanta pos_inicial
 
   //tras
-  TE_perna.write(posInicial_TE_perna + 20);
+  TE_perna.write(posInicial_TE_perna + 50); //abaixa //20
   delay(150);
   TE_corpo.write(posInicial_TE_corpo + 10); // +10
   delay(150);
-  TE_perna.write(posInicial_TE_perna);
+  TE_perna.write(posInicial_TE_perna); //levanta pos_inicial
 
   //tras
-  FD_perna.write(posInicial_FD_perna + 40); //abaixa
+  FD_perna.write(posInicial_FD_perna + 35); //abaixa
   delay(150);
   FD_corpo.write(posIncial_FD_corpo - 40); //-50
   delay(150);
