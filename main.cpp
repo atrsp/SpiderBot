@@ -1,4 +1,3 @@
-//#include <Wire.h>
 #include <Servo.h>
 
 //Iniciando servos:
@@ -33,24 +32,30 @@ float distancia;
 #define distanciaSegura 30
 
 #define posIncial_FD_corpo 50
-#define posInicial_FD_perna 140 //135
+#define posInicial_FD_perna 135 
 
 #define posInicial_TD_corpo 40
-#define posInicial_TD_perna 105 //100
+#define posInicial_TD_perna 100 
 
 #define posInicial_FE_corpo 140
-#define posInicial_FE_perna 120 //100
+#define posInicial_FE_perna 100 
 
 #define posInicial_TE_corpo 130
-#define posInicial_TE_perna 70 //70
+#define posInicial_TE_perna 70 
 
 void PosInicial();
+
 void AndarReto();
+
 void GirarHorario();
+
+float LeDistancia();
+
 
 void setup() {
 
   //Setup monitor serial
+
   Serial.begin(9600);
 
   //Setup dos servos:
@@ -67,6 +72,7 @@ void setup() {
   TE_corpo.attach(pinTE_corpo);
   TE_perna.attach(pinTE_perna);
 
+  
   delay(1000);
   PosInicial();
   delay(1000);
@@ -77,8 +83,10 @@ void setup() {
 }
 
 
+
 /*****************LOOP*****************/
 void loop() {
+
   
   //Leitura da distancia:
   distancia = LeDistancia();
@@ -96,18 +104,17 @@ void loop() {
     delay(500);
     PosInicial();
   }
-
   else {
     AndarReto();
   }
   
   
-  
 }
 /*****************************************/
 
-void PosInicial() {
 
+
+void PosInicial() {
   //Posicao inicial corpo:
   FD_corpo.write(posIncial_FD_corpo);
   delay(100);
@@ -132,17 +139,19 @@ void PosInicial() {
 float LeDistancia() {
 
   digitalWrite(pinTrigger, LOW);
+  //delayMicrosseconds(5);
   delay(0.005);
 
   digitalWrite(pinTrigger, HIGH);
+  //delayMicrosseconds(10);
   delay(0.01);
-
   digitalWrite(pinTrigger, LOW);
 
   return (pulseIn(pinEcho, HIGH) * 0.017);
 }
 
 void AndarReto() {
+
 
   //frente
   FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
@@ -168,14 +177,15 @@ void AndarReto() {
   //frente
   TE_perna.write(posInicial_TE_perna - 30); //levanta
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo - 40); //-40
+  TE_corpo.write(posInicial_TE_corpo - 30); //-40
   delay(150);
   TE_perna.write(posInicial_TE_perna); //abaixa pos_inicial
+
 
   /***************************************************/
 
   //tras
-  FE_perna.write(posInicial_FE_perna + 20); //abaixa
+  FE_perna.write(posInicial_FE_perna + 30); //abaixa
   delay(150);
   FE_corpo.write(posInicial_FE_corpo + 30); //+40
   delay(150);
@@ -189,25 +199,27 @@ void AndarReto() {
   TD_perna.write(posInicial_TD_perna); //levanta pos_inicial
 
   //tras
-  TE_perna.write(posInicial_TE_perna + 50); //abaixa //20
+  TE_perna.write(posInicial_TE_perna + 20);
   delay(150);
   TE_corpo.write(posInicial_TE_corpo + 10); // +10
   delay(150);
-  TE_perna.write(posInicial_TE_perna); //levanta pos_inicial
+  TE_perna.write(posInicial_TE_perna);
 
   //tras
-  FD_perna.write(posInicial_FD_perna + 35); //abaixa
+  FD_perna.write(posInicial_FD_perna + 40); //abaixa
   delay(150);
   FD_corpo.write(posIncial_FD_corpo - 40); //-50
   delay(150);
   FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
+
 
 }
 
+
+
 void GirarHorario() {
   
-  //Realiza o movimento 3 vezes para garantir um giro de 90 graus, pelo menos.
-  
+
   //frente
   FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
   delay(150);
@@ -235,6 +247,7 @@ void GirarHorario() {
   FD_corpo.write(posIncial_FD_corpo - 40); //-50
   delay(150);
   FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
+
 
 /*****************************************************/
 
@@ -266,7 +279,9 @@ void GirarHorario() {
   delay(150);
   FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
 
+
   /*-----------------------------------*/
+
 
   //frente
   FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
@@ -295,6 +310,7 @@ void GirarHorario() {
   FD_corpo.write(posIncial_FD_corpo - 40); //-50
   delay(150);
   FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
+
 
 /*****************************************************/
 
@@ -326,7 +342,9 @@ void GirarHorario() {
   delay(150);
   FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
 
+
   /*-----------------------------------*/
+
 
   //frente
   FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
@@ -355,6 +373,7 @@ void GirarHorario() {
   FD_corpo.write(posIncial_FD_corpo - 40); //-50
   delay(150);
   FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
+
 
 /*****************************************************/
 
