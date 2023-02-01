@@ -29,8 +29,10 @@ Servo TE_perna;
 
 float distancia;
 
+//distancia segura para desvio de obstaculo definido como 30cm
 #define distanciaSegura 30
 
+//Definindo posicoes iniciais de movimento dos servos
 #define posIncial_FD_corpo 50
 #define posInicial_FD_perna 135 
 
@@ -43,23 +45,20 @@ float distancia;
 #define posInicial_TE_corpo 130
 #define posInicial_TE_perna 70 
 
+//cabeçalhos das funcoes utilizadas
 void PosInicial();
-
 void AndarReto();
-
 void GirarHorario();
-
 float LeDistancia();
 
 
 void setup() {
 
   //Setup monitor serial
-
   Serial.begin(9600);
 
   //Setup dos servos:
-  //Attachs - seta os pinos:
+  //Attachs - configuram os pinos para uso:
   FD_corpo.attach(pinFD_corpo);
   FD_perna.attach(pinFD_perna);
   
@@ -72,7 +71,6 @@ void setup() {
   TE_corpo.attach(pinTE_corpo);
   TE_perna.attach(pinTE_perna);
 
-  
   delay(1000);
   PosInicial();
   delay(1000);
@@ -83,17 +81,13 @@ void setup() {
 }
 
 
-
 /*****************LOOP*****************/
 void loop() {
-
   
   //Leitura da distancia:
   distancia = LeDistancia();
-  
   Serial.println("Distancia = ");
   Serial.print(distancia);
-  
   
   //Processa decisao de movimento:
   if (distancia <= distanciaSegura) {
@@ -107,14 +101,13 @@ void loop() {
   else {
     AndarReto();
   }
-  
-  
+
 }
 /*****************************************/
 
 
-
 void PosInicial() {
+
   //Posicao inicial corpo:
   FD_corpo.write(posIncial_FD_corpo);
   delay(100);
@@ -139,11 +132,9 @@ void PosInicial() {
 float LeDistancia() {
 
   digitalWrite(pinTrigger, LOW);
-  //delayMicrosseconds(5);
   delay(0.005);
 
   digitalWrite(pinTrigger, HIGH);
-  //delayMicrosseconds(10);
   delay(0.01);
   digitalWrite(pinTrigger, LOW);
 
@@ -152,257 +143,254 @@ float LeDistancia() {
 
 void AndarReto() {
 
+  //frente
+  FE_perna.write(posInicial_FE_perna - 30); //levanta perna
+  delay(150);
+  FE_corpo.write(posInicial_FE_corpo - 20); //move corpo
+  delay(150);
+  FE_perna.write(posInicial_FE_perna); //abaixa perna para pos_inicial
 
   //frente
-  FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
+  TD_perna.write(posInicial_TD_perna - 30); //levanta perna
   delay(150);
-  FE_corpo.write(posInicial_FE_corpo - 20); //-20
+  TD_corpo.write(posInicial_TD_corpo + 30); //move corpo
   delay(150);
-  FE_perna.write(posInicial_FE_perna); //abaixa pos_inicial
+  TD_perna.write(posInicial_TD_perna); //abaixa perna para pos_inicial
 
   //frente
-  TD_perna.write(posInicial_TD_perna - 30); //levanta
+  FD_perna.write(posInicial_FD_perna - 30); //levanta perna
   delay(150);
-  TD_corpo.write(posInicial_TD_corpo + 30); //+40
+  FD_corpo.write(posIncial_FD_corpo + 20); //move corpo
   delay(150);
-  TD_perna.write(posInicial_TD_perna); //abaixa pos_inicial
+  FD_perna.write(posInicial_FD_perna); //abaixa perna para pos_inicial
 
   //frente
-  FD_perna.write(posInicial_FD_perna - 30); //levanta
+  TE_perna.write(posInicial_TE_perna - 30); //levanta perna
   delay(150);
-  FD_corpo.write(posIncial_FD_corpo + 20); //+20
+  TE_corpo.write(posInicial_TE_corpo - 30); //move corpo
   delay(150);
-  FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
-
-  //frente
-  TE_perna.write(posInicial_TE_perna - 30); //levanta
-  delay(150);
-  TE_corpo.write(posInicial_TE_corpo - 30); //-40
-  delay(150);
-  TE_perna.write(posInicial_TE_perna); //abaixa pos_inicial
+  TE_perna.write(posInicial_TE_perna); //abaixa perna para pos_inicial
 
 
   /***************************************************/
 
   //tras
-  FE_perna.write(posInicial_FE_perna + 30); //abaixa
+  FE_perna.write(posInicial_FE_perna + 30); //abaixa perna
   delay(150);
-  FE_corpo.write(posInicial_FE_corpo + 30); //+40
+  FE_corpo.write(posInicial_FE_corpo + 30); //move corpo
   delay(150);
-  FE_perna.write(posInicial_FE_perna); //levanta pos_inicial
+  FE_perna.write(posInicial_FE_perna); //levanta perna para pos_inicial
 
   //tras
-  TD_perna.write(posInicial_TD_perna + 25); //abaixa
+  TD_perna.write(posInicial_TD_perna + 25); //abaixa perna
   delay(150);
-  TD_corpo.write(posInicial_TD_corpo - 10); //-30
+  TD_corpo.write(posInicial_TD_corpo - 10); //move corpo
   delay(150);
-  TD_perna.write(posInicial_TD_perna); //levanta pos_inicial
+  TD_perna.write(posInicial_TD_perna); //levanta perna para pos_inicial
 
   //tras
-  TE_perna.write(posInicial_TE_perna + 20);
+  TE_perna.write(posInicial_TE_perna + 20); //abaixa perna
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo + 10); // +10
+  TE_corpo.write(posInicial_TE_corpo + 10); //move corpo
   delay(150);
-  TE_perna.write(posInicial_TE_perna);
+  TE_perna.write(posInicial_TE_perna);//levanta perna para pos_inicial
 
   //tras
-  FD_perna.write(posInicial_FD_perna + 40); //abaixa
+  FD_perna.write(posInicial_FD_perna + 40); //abaixa perna
   delay(150);
-  FD_corpo.write(posIncial_FD_corpo - 40); //-50
+  FD_corpo.write(posIncial_FD_corpo - 40); //move corpo
   delay(150);
-  FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
-
+  FD_perna.write(posInicial_FD_perna); //levanta perna para pos_inicial
 
 }
 
 
-
 void GirarHorario() {
-  
+  //o movimento eh repetido 3 vezes
 
   //frente
-  FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
+  FE_perna.write(posInicial_FE_perna - 30); //levanta perna
   delay(150);
-  FE_corpo.write(posInicial_FE_corpo - 80); //-20
+  FE_corpo.write(posInicial_FE_corpo - 80); //move corpo
   delay(150);
-  FE_perna.write(posInicial_FE_perna); //abaixa pos_inicial
+  FE_perna.write(posInicial_FE_perna); //abaixa perna para pos_inicial
 
   //tras
-  TD_perna.write(posInicial_TD_perna + 25); //abaixa
+  TD_perna.write(posInicial_TD_perna + 25); //abaixa perna 
   delay(150);
-  TD_corpo.write(posInicial_TD_corpo - 20); //-30
+  TD_corpo.write(posInicial_TD_corpo - 20); //move corpo
   delay(150);
-  TD_perna.write(posInicial_TD_perna); //levanta pos_inicial
+  TD_perna.write(posInicial_TD_perna); //levanta perna para pos_inicial
 
   //frente
-  TE_perna.write(posInicial_TE_perna - 30); //levanta
+  TE_perna.write(posInicial_TE_perna - 30); //levanta perna
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo - 70); //-40
+  TE_corpo.write(posInicial_TE_corpo - 70); //move corpo
   delay(150);
-  TE_perna.write(posInicial_TE_perna); //abaixa pos_inicial
+  TE_perna.write(posInicial_TE_perna); //abaixa perna para pos_inicial
 
   //tras
-  FD_perna.write(posInicial_FD_perna + 40); //abaixa
+  FD_perna.write(posInicial_FD_perna + 40); //abaixa perna 
   delay(150);
-  FD_corpo.write(posIncial_FD_corpo - 40); //-50
+  FD_corpo.write(posIncial_FD_corpo - 40); //move corpo
   delay(150);
-  FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
+  FD_perna.write(posInicial_FD_perna); //levanta perna para pos_inicial
 
 
 /*****************************************************/
 
   //tras
-  FE_perna.write(posInicial_FE_perna + 30); //abaixa
+  FE_perna.write(posInicial_FE_perna + 30); //abaixa perna 
   delay(150);
-  FE_corpo.write(posInicial_FE_corpo + 30); //+40
+  FE_corpo.write(posInicial_FE_corpo + 30); //move corpo
   delay(150);
-  FE_perna.write(posInicial_FE_perna); //levanta pos_inicial
+  FE_perna.write(posInicial_FE_perna); //levanta perna para pos_inicial
   
   //frente
-  TD_perna.write(posInicial_TD_perna - 30); //levanta
+  TD_perna.write(posInicial_TD_perna - 30); //levanta perna 
   delay(150);
-  TD_corpo.write(posInicial_TD_corpo + 50); //+40
+  TD_corpo.write(posInicial_TD_corpo + 50); //move corpo
   delay(150);
-  TD_perna.write(posInicial_TD_perna); //abaixa pos_inicial
+  TD_perna.write(posInicial_TD_perna); //abaixa perna para pos_inicial
   
   //tras
-  TE_perna.write(posInicial_TE_perna + 20);
+  TE_perna.write(posInicial_TE_perna + 20); //abaixa perna
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo + 10); // +10
+  TE_corpo.write(posInicial_TE_corpo + 10); //move corpo
   delay(150);
-  TE_perna.write(posInicial_TE_perna);
+  TE_perna.write(posInicial_TE_perna);//levanta perna para pos_inicial
 
   //frente
-  FD_perna.write(posInicial_FD_perna - 30); //levanta
+  FD_perna.write(posInicial_FD_perna - 30); //levanta perna 
   delay(150);
-  FD_corpo.write(posIncial_FD_corpo + 70); //+20
+  FD_corpo.write(posIncial_FD_corpo + 70); //move corpo
   delay(150);
-  FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
+  FD_perna.write(posInicial_FD_perna); //abaixa perna para pos_inicial
 
 
   /*-----------------------------------*/
 
 
   //frente
-  FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
+  FE_perna.write(posInicial_FE_perna - 30); //levanta perna
   delay(150);
-  FE_corpo.write(posInicial_FE_corpo - 80); //-20
+  FE_corpo.write(posInicial_FE_corpo - 80); //move corpo
   delay(150);
-  FE_perna.write(posInicial_FE_perna); //abaixa pos_inicial
+  FE_perna.write(posInicial_FE_perna); //abaixa perna para pos_inicial
 
   //tras
-  TD_perna.write(posInicial_TD_perna + 25); //abaixa
+  TD_perna.write(posInicial_TD_perna + 25); //abaixa perna 
   delay(150);
-  TD_corpo.write(posInicial_TD_corpo - 20); //-30
+  TD_corpo.write(posInicial_TD_corpo - 20); //move corpo
   delay(150);
-  TD_perna.write(posInicial_TD_perna); //levanta pos_inicial
+  TD_perna.write(posInicial_TD_perna); //levanta perna para pos_inicial
 
   //frente
-  TE_perna.write(posInicial_TE_perna - 30); //levanta
+  TE_perna.write(posInicial_TE_perna - 30); //levanta perna
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo - 70); //-40
+  TE_corpo.write(posInicial_TE_corpo - 70); //move corpo
   delay(150);
-  TE_perna.write(posInicial_TE_perna); //abaixa pos_inicial
+  TE_perna.write(posInicial_TE_perna); //abaixa perna para pos_inicial
 
   //tras
-  FD_perna.write(posInicial_FD_perna + 40); //abaixa
+  FD_perna.write(posInicial_FD_perna + 40); //abaixa perna 
   delay(150);
-  FD_corpo.write(posIncial_FD_corpo - 40); //-50
+  FD_corpo.write(posIncial_FD_corpo - 40); //move corpo
   delay(150);
-  FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
+  FD_perna.write(posInicial_FD_perna); //levanta perna para pos_inicial
 
 
 /*****************************************************/
 
   //tras
-  FE_perna.write(posInicial_FE_perna + 30); //abaixa
+  FE_perna.write(posInicial_FE_perna + 30); //abaixa perna 
   delay(150);
-  FE_corpo.write(posInicial_FE_corpo + 30); //+40
+  FE_corpo.write(posInicial_FE_corpo + 30); //move corpo
   delay(150);
-  FE_perna.write(posInicial_FE_perna); //levanta pos_inicial
+  FE_perna.write(posInicial_FE_perna); //levanta perna para pos_inicial
   
   //frente
-  TD_perna.write(posInicial_TD_perna - 30); //levanta
+  TD_perna.write(posInicial_TD_perna - 30); //levanta perna 
   delay(150);
-  TD_corpo.write(posInicial_TD_corpo + 50); //+40
+  TD_corpo.write(posInicial_TD_corpo + 50); //move corpo
   delay(150);
-  TD_perna.write(posInicial_TD_perna); //abaixa pos_inicial
+  TD_perna.write(posInicial_TD_perna); //abaixa perna para pos_inicial
   
   //tras
-  TE_perna.write(posInicial_TE_perna + 20);
+  TE_perna.write(posInicial_TE_perna + 20); //abaixa perna
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo + 10); // +10
+  TE_corpo.write(posInicial_TE_corpo + 10); //move corpo
   delay(150);
-  TE_perna.write(posInicial_TE_perna);
+  TE_perna.write(posInicial_TE_perna);//abaixa perna para pos_inicial
 
   //frente
-  FD_perna.write(posInicial_FD_perna - 30); //levanta
+  FD_perna.write(posInicial_FD_perna - 30); //levanta perna 
   delay(150);
-  FD_corpo.write(posIncial_FD_corpo + 70); //+20
+  FD_corpo.write(posIncial_FD_corpo + 70); //move corpo
   delay(150);
-  FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
+  FD_perna.write(posInicial_FD_perna); //abaixa perna para pos_inicial
 
 
   /*-----------------------------------*/
 
 
   //frente
-  FE_perna.write(posInicial_FE_perna - 30); //levanta (-40)
+  FE_perna.write(posInicial_FE_perna - 30); //levanta perna 
   delay(150);
-  FE_corpo.write(posInicial_FE_corpo - 80); //-20
+  FE_corpo.write(posInicial_FE_corpo - 80); //move corpo
   delay(150);
-  FE_perna.write(posInicial_FE_perna); //abaixa pos_inicial
+  FE_perna.write(posInicial_FE_perna); //abaixa perna para pos_inicial
 
   //tras
-  TD_perna.write(posInicial_TD_perna + 25); //abaixa
+  TD_perna.write(posInicial_TD_perna + 25); //abaixa perna 
   delay(150);
-  TD_corpo.write(posInicial_TD_corpo - 20); //-30
+  TD_corpo.write(posInicial_TD_corpo - 20); //move corpo
   delay(150);
-  TD_perna.write(posInicial_TD_perna); //levanta pos_inicial
+  TD_perna.write(posInicial_TD_perna); //levanta perna para pos_inicial
 
   //frente
-  TE_perna.write(posInicial_TE_perna - 30); //levanta
+  TE_perna.write(posInicial_TE_perna - 30); //levanta perna
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo - 70); //-40
+  TE_corpo.write(posInicial_TE_corpo - 70); //move corpo
   delay(150);
-  TE_perna.write(posInicial_TE_perna); //abaixa pos_inicial
+  TE_perna.write(posInicial_TE_perna); //abaixa perna pos_inicial
 
   //tras
-  FD_perna.write(posInicial_FD_perna + 40); //abaixa
+  FD_perna.write(posInicial_FD_perna + 40); //abaixa perna 
   delay(150);
-  FD_corpo.write(posIncial_FD_corpo - 40); //-50
+  FD_corpo.write(posIncial_FD_corpo - 40); //move corpo
   delay(150);
-  FD_perna.write(posInicial_FD_perna); //levanta pos_inicial
+  FD_perna.write(posInicial_FD_perna); //levanta perna pos_inicial
 
 
 /*****************************************************/
 
   //tras
-  FE_perna.write(posInicial_FE_perna + 30); //abaixa
+  FE_perna.write(posInicial_FE_perna + 30); //abaixa perna
   delay(150);
-  FE_corpo.write(posInicial_FE_corpo + 30); //+40
+  FE_corpo.write(posInicial_FE_corpo + 30); //move corpo
   delay(150);
-  FE_perna.write(posInicial_FE_perna); //levanta pos_inicial
+  FE_perna.write(posInicial_FE_perna); //levanta perna pos_inicial
   
   //frente
-  TD_perna.write(posInicial_TD_perna - 30); //levanta
+  TD_perna.write(posInicial_TD_perna - 30); //levanta perna 
   delay(150);
-  TD_corpo.write(posInicial_TD_corpo + 50); //+40
+  TD_corpo.write(posInicial_TD_corpo + 50); //move corpo
   delay(150);
-  TD_perna.write(posInicial_TD_perna); //abaixa pos_inicial
+  TD_perna.write(posInicial_TD_perna); //abaixa perna para pos_inicial
   
   //tras
-  TE_perna.write(posInicial_TE_perna + 20);
+  TE_perna.write(posInicial_TE_perna + 20); //abaixa perna
   delay(150);
-  TE_corpo.write(posInicial_TE_corpo + 10); // +10
+  TE_corpo.write(posInicial_TE_corpo + 10); //move corpo
   delay(150);
-  TE_perna.write(posInicial_TE_perna);
+  TE_perna.write(posInicial_TE_perna); //levanta perna para pos_inicial
 
   //frente
-  FD_perna.write(posInicial_FD_perna - 30); //levanta
+  FD_perna.write(posInicial_FD_perna - 30); //levanta perna
   delay(150);
-  FD_corpo.write(posIncial_FD_corpo + 70); //+20
+  FD_corpo.write(posIncial_FD_corpo + 70); //move corpo
   delay(150);
-  FD_perna.write(posInicial_FD_perna); //abaixa pos_inicial
+  FD_perna.write(posInicial_FD_perna); //abaixa perna para pos_inicial
   
 }
