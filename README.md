@@ -2,6 +2,7 @@
 
 > ##### Autores: [@atrsp](https://github.com/atrsp), [@felipemattosv](https://github.com/felipemattosv) e [@vitordcgomes](https://github.com/vitordcgomes).
 
+### **Troféu de destaque na [IV Mostra Projeto Integrado em Computação -2022/2](https://computacao-ufes.github.io/mostra/pic_EC_20222.html) !**
 ##### **Objetivo:** Criar uma solução integrando hardware e software.
 
 ##### **Resumo:** Nosso projeto consiste na produção de uma aranha robótica constituída de uma estrutura em acrílico, 8 micro servos, um sensor ultrassônico para detectar obstáculos no caminho, o Arduino UNO R3 e uma bateria para alimentação.
